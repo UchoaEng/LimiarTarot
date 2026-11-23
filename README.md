@@ -1,88 +1,70 @@
-# Limiar — Tarô de Waite
+# Limiar — Waite Tarot
 
-Portal informativo e interativo em português brasileiro para estudar as 78 cartas do Rider-Waite e interpretar tiragens feitas com um baralho físico.
+An informative, interactive portal (in Brazilian Portuguese) to study all 78 Rider-Waite cards and interpret spreads drawn with a physical deck.
 
-O Limiar não embaralha nem sorteia cartas. A pessoa realiza a tiragem com o próprio baralho, registra no site a sequência obtida e recebe uma leitura baseada no conteúdo canônico do projeto. Quando o Ollama está disponível, a aplicação também produz uma interpretação contextual por IA; se o serviço falhar, a leitura básica continua acessível.
+Limiar never shuffles or draws cards. You draw with your own deck, record the sequence on the site and get a reading based on the project's canonical content. When Ollama is available, the app also writes a contextual AI interpretation; if the service fails, the basic reading is still there.
 
-> As interpretações têm finalidade simbólica e reflexiva. Elas não substituem orientação médica, psicológica, jurídica ou financeira.
+> Readings are symbolic and reflective. They do not replace medical, psychological, legal or financial advice.
 
-## Recursos
+[🇧🇷 Leia em português](#-português)
 
-- biblioteca pesquisável com os 22 Arcanos Maiores e 56 Arcanos Menores;
-- significados por contexto: geral, carreira, amor e tendências futuras;
-- páginas individuais com simbolismo, palavras-chave e referência ao manual;
-- Carta do Dia dinâmica, com rotação diária pelas 78 cartas sem repetição durante o ciclo;
-- oito modalidades de tiragem, de uma carta à Mandala Astrológica;
-- registro guiado das cartas retiradas de um baralho físico;
-- interpretação contextual opcional com Ollama e escolha entre modelos Gemma 3 e Qwen 3.5;
-- gerenciamento completo dos modelos locais pelo portal: instalação com progresso, seleção para as tiragens e remoção;
-- leitura básica automática quando a IA local não está disponível;
-- histórico de até 50 tiragens salvo no navegador;
-- interface responsiva, animações e respeito à preferência de movimento reduzido;
-- testes unitários, de componentes, de conteúdo e ponta a ponta.
+## Features
 
-## Tecnologias
+- Searchable library with the 22 Major and 56 Minor Arcana.
+- Meanings by context: general, career, love and future trends.
+- Card pages with symbolism, keywords and a reference to the source manual.
+- Dynamic Card of the Day, rotating through all 78 cards without repeats in a cycle.
+- Eight spread types, from a single card to the Astrological Mandala.
+- Guided recording of cards drawn from a physical deck: **Enter** registers the first search result, the step indicator works as navigation, and you can go back to any completed step.
+- **Resumable spreads:** question, theme, recorded cards and step are kept for 24 hours per spread type, so reloading or closing the browser doesn't lose progress.
+- Optional contextual interpretation with Ollama, choosing between Gemma 3 and Qwen 3.5 models.
+- Full local model management from the portal: install with progress, select for readings, remove.
+- Automatic basic reading when local AI isn't available.
+- History of up to 50 readings stored in the browser, with **undo** for single or bulk deletions.
+- Responsive UI, animations, back-to-top button and respect for reduced-motion preferences.
+- Unit, component, content and end-to-end tests.
 
-| Área | Tecnologia |
+## Tech stack
+
+| Area | Technology |
 | --- | --- |
-| Aplicação | Next.js 16, React 19 e TypeScript |
-| Estilos | Tailwind CSS 4 e CSS global |
-| Animações | Motion |
-| Validação | Zod |
-| IA local | Ollama (Gemma 3 e Qwen 3.5) |
-| Testes | Vitest, Testing Library e Playwright |
-| Conteúdo | Python, pypdf e Pillow |
-| Gerenciador de pacotes | pnpm |
+| App | Next.js 16, React 19 and TypeScript |
+| Styles | Tailwind CSS 4 and global CSS |
+| Animation | Motion |
+| Validation | Zod |
+| Local AI | Ollama (Gemma 3 and Qwen 3.5) |
+| Tests | Vitest, Testing Library and Playwright |
+| Content | Python, pypdf and Pillow |
+| Package manager | pnpm |
 
-## Como a leitura funciona
+## How a reading works
 
 ```mermaid
 flowchart LR
-    A[Escolher a tiragem] --> B[Escrever a pergunta e o tema]
-    B --> C[Tirar as cartas no baralho físico]
-    C --> D[Registrar as cartas na ordem]
-    D --> E[Salvar a sessão no navegador]
-    E --> F{Ollama disponível?}
-    F -->|Sim| G[Interpretação contextual por IA]
-    F -->|Não| H[Leitura básica pelo conteúdo canônico]
+    A[Choose the spread] --> B[Write the question and theme]
+    B --> C[Draw cards from the physical deck]
+    C --> D[Record the cards in order]
+    D --> E[Save the session in the browser]
+    E --> F{Ollama available?}
+    F -->|Yes| G[Contextual AI interpretation]
+    F -->|No| H[Basic reading from canonical content]
 ```
 
-A API valida a pergunta, a modalidade, a quantidade de cartas e a posição de cada uma antes de consultar o Ollama. A resposta do modelo também passa por um schema estrito e não pode introduzir cartas ausentes na tiragem.
+The API validates the question, spread type, card count and each position before calling Ollama. The model's answer also goes through a strict schema and cannot introduce cards that weren't drawn.
 
-## Pré-requisitos
+## Prerequisites
 
-Para executar a aplicação:
+- To run the app: [Node.js](https://nodejs.org/) 20.9+ and [pnpm](https://pnpm.io/).
+- For AI interpretation: [Ollama](https://ollama.com/) running, with at least one compatible model.
+- To regenerate content from the PDF: Python 3.11+ with `pypdf` and `Pillow`.
 
-- [Node.js](https://nodejs.org/) 20.9 ou superior;
-- [pnpm](https://pnpm.io/) compatível com o seu Node.js.
+## Easy install on Windows
 
-Para usar a interpretação por IA:
+Double-click `ABRIR_LIMIAR_TARO.bat` (**Limiar Tarô — Início Fácil**). It creates a desktop shortcut with its own icon, checks Node.js, installs dependencies, prepares `.env.local` and offers an optional menu to install, list or remove Ollama models. At the end it keeps the terminal open and shows how to open [http://localhost:3000](http://localhost:3000).
 
-- [Ollama](https://ollama.com/) instalado e em execução;
-- pelo menos um dos modelos compatíveis baixado localmente.
+Windows can't embed icons in `.bat` files, so the repo ships the native shortcut `Limiar Tarô - Início Fácil.lnk`, pointing to the `.bat` and using `assets/limiar-taro.ico`. `.lnk` files store the folder path they were created in: after cloning or moving the project, run the `.bat` once and it updates both shortcuts. To open only the model manager: `ABRIR_LIMIAR_TARO.bat --ollama-only`.
 
-Para regenerar o conteúdo a partir do PDF:
-
-- Python 3.11 ou superior;
-- pacotes `pypdf` e `Pillow`.
-
-## Instalação fácil no Windows
-
-Dê dois cliques em `ABRIR_LIMIAR_TARO.bat`, o iniciador **Limiar Tarô — Início Fácil**. Com a proposta “Seu portal de Tarô local, pronto em um clique”, ele cria na Área de Trabalho um atalho com ícone próprio, verifica o Node.js, instala as dependências, prepara o `.env.local` e oferece um menu opcional para instalar, listar ou remover modelos do Ollama. Ao final, mantém o terminal aberto e mostra como acessar [http://localhost:3000](http://localhost:3000).
-
-O Windows não permite incorporar ícones diretamente em arquivos `.bat`. Por isso, o repositório inclui o atalho nativo `Limiar Tarô - Início Fácil.lnk`, que aponta para o `.bat` e usa o ícone Windows `assets/limiar-taro.ico`. O iniciador mantém uma cópia do atalho dentro do projeto, para ser versionada no Git, e outra na Área de Trabalho. Abra pelo atalho para ver o ícone personalizado no Explorer.
-
-Atalhos `.lnk` registram o caminho da pasta em que foram criados. Depois de clonar, baixar ou mover o projeto para outro local, execute `ABRIR_LIMIAR_TARO.bat` uma vez; ele atualiza automaticamente o atalho do repositório e o da Área de Trabalho para o novo caminho.
-
-Para abrir depois somente o gerenciador de modelos:
-
-```bat
-ABRIR_LIMIAR_TARO.bat --ollama-only
-```
-
-## Instalação manual
-
-No PowerShell, a partir da raiz do projeto:
+## Manual install
 
 ```powershell
 pnpm install
@@ -90,177 +72,118 @@ Copy-Item .env.example .env.local
 pnpm dev
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000). Content, images and the basic reading are already in the repo, so Ollama and Python aren't needed just to browse.
 
-O conteúdo, as imagens e a leitura básica já estão no repositório. Portanto, o Ollama e o Python não são necessários para simplesmente navegar pelo portal.
+## Local interpretation with Ollama
 
-## Interpretação local com Ollama
+The current maximum is **12 cards**. The free spread accepts 4 to 12 cards, the Astrological Mandala uses 12, and the API rejects anything above that.
 
-O máximo atual da aplicação é **12 cartas**, não 20. A tiragem livre aceita entre 4 e 12 cartas, a Mandala Astrológica usa 12 e a API rejeita qualquer leitura acima desse limite.
+### Compatible models
 
-### Modelos compatíveis
-
-| Modelo | Download aproximado | Perfil | Uso recomendado |
+| Model | Approx. download | Profile | Recommended use |
 | --- | ---: | --- | --- |
-| `gemma3:4b` | 3,3 GB | Leve | Tiragens menores em máquinas modestas; menor consistência perto de 12 cartas. |
-| `qwen3.5:4b` | 3,4 GB | Leve | Alternativa moderna e econômica para leituras curtas e médias. |
-| `qwen3.5:9b` | 6,6 GB | Equilibrado | Melhor equilíbrio geral para leituras de até 12 cartas. |
-| `gemma3:12b` | 8,1 GB | Equilibrado | Padrão do projeto, consistente em português e em respostas estruturadas. |
-| `qwen3.5:27b` | 17 GB | Potente | Mais capacidade para relacionar muitas posições, exigindo hardware forte. |
-| `gemma3:27b` | 17 GB | Potente | Maior qualidade da família Gemma para leituras densas. |
+| `gemma3:4b` | 3.3 GB | Light | Smaller spreads on modest machines; less consistent near 12 cards. |
+| `qwen3.5:4b` | 3.4 GB | Light | Modern, economical option for short and medium readings. |
+| `qwen3.5:9b` | 6.6 GB | Balanced | Best overall balance for up to 12 cards. |
+| `gemma3:12b` | 8.1 GB | Balanced | Project default, consistent in Portuguese and structured output. |
+| `qwen3.5:27b` | 17 GB | Powerful | More capacity to relate many positions; needs strong hardware. |
+| `gemma3:27b` | 17 GB | Powerful | Highest Gemma quality for dense readings. |
 
-Os tamanhos são os exibidos na biblioteca oficial do Ollama e podem mudar quando uma versão é atualizada. Gemma 3 oferece contexto de 128K nos modelos listados; Qwen 3.5 oferece 256K. O Limiar usa uma janela de 16K, suficiente para o contexto canônico das 12 cartas, e valida o JSON retornado. Modelos menores economizam memória, mas têm maior chance de produzir uma resposta incompleta em tiragens longas.
-
-Baixe um ou mais modelos:
+Sizes are those listed in the official Ollama library and may change. Limiar uses a 16K context window, enough for the canonical context of 12 cards, and validates the returned JSON. Smaller models save memory but are more likely to return an incomplete answer on long spreads.
 
 ```powershell
 ollama pull qwen3.5:9b
 ollama pull gemma3:12b
-```
-
-Inicie o Ollama, caso ele ainda não esteja rodando, e depois execute o projeto:
-
-```powershell
 ollama serve
 pnpm dev
 ```
 
-Por padrão, o servidor Next.js consulta `http://127.0.0.1:11434`. A geração pode levar alguns minutos dependendo de CPU, GPU, memória disponível e quantidade de cartas. O limite padrão é de seis minutos.
+By default the Next.js server calls `http://127.0.0.1:11434`. Generation can take a few minutes depending on hardware and card count; the default timeout is six minutes.
 
-O `.bat` somente instala e baixa os modelos. A troca do modelo ativo acontece dentro do frontend: escolha uma modalidade em **Tiragens** e use o campo **Modelo ativo** na primeira etapa, antes de escrever a pergunta. A preferência fica salva neste navegador e é aplicada ao resultado e às próximas tiragens.
+Open **Modelos** in the portal menu (`/modelos`) to install models with progress, switch the active model or delete installed ones without a terminal. Deletion only unlocks after typing the exact model id. The spread's first step and the result page also let you switch models; the choice is saved in the browser.
 
-Abra **Modelos** no menu do próprio portal (`http://localhost:3000/modelos`) para instalar modelos com acompanhamento do progresso, trocar o modelo ativo ou excluir qualquer modelo instalado, sem usar o terminal. O modelo recém-instalado já fica selecionado para as próximas tiragens. A tela inicial da tiragem e a página de resultado também permitem trocar o modelo. Para evitar acidentes, a exclusão só é liberada depois que o usuário digita o identificador exato do modelo; a ação então libera o espaço usando a API local do Ollama. Se o modelo ou o serviço não estiver disponível, o resultado mostra a leitura básica.
+## Environment variables
 
-Também é possível administrar manualmente:
+Create `.env.local` from `.env.example`:
 
-```powershell
-ollama list
-ollama rm gemma3:4b
-```
-
-## Variáveis de ambiente
-
-Crie `.env.local` a partir de `.env.example`:
-
-| Variável | Obrigatória | Padrão/finalidade |
+| Variable | Required | Default / purpose |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Recomendada | URL canônica usada em metadados, sitemap e compartilhamento. |
-| `OLLAMA_BASE_URL` | Não | Endereço do Ollama. Padrão: `http://127.0.0.1:11434`. |
-| `OLLAMA_MODEL` | Não | Modelo inicial quando não há preferência salva. Padrão: `gemma3:12b`. |
-| `OLLAMA_TIMEOUT_MS` | Não | Tempo máximo da interpretação em milissegundos. Padrão: `360000`. |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical URL for metadata, sitemap and sharing. |
+| `OLLAMA_BASE_URL` | No | Ollama address. Default `http://127.0.0.1:11434`. |
+| `OLLAMA_MODEL` | No | Initial model when no preference is saved. Default `gemma3:12b`. |
+| `OLLAMA_TIMEOUT_MS` | No | Max interpretation time in ms. Default `360000`. |
 
-Exemplo:
+Never commit `.env.local` or credentials.
 
-```dotenv
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-OLLAMA_BASE_URL=http://127.0.0.1:11434
-OLLAMA_MODEL=gemma3:12b
-OLLAMA_TIMEOUT_MS=360000
-```
+## Commands
 
-Nunca versione `.env.local` ou credenciais. O `.gitignore` mantém apenas `.env.example` no controle de versão.
-
-## Comandos disponíveis
-
-| Comando | Descrição |
+| Command | Description |
 | --- | --- |
-| `pnpm dev` | Inicia o servidor de desenvolvimento. |
-| `pnpm build` | Gera o build de produção e valida a compilação. |
-| `pnpm start` | Executa localmente um build já gerado. |
-| `pnpm lint` | Analisa o código com ESLint. |
-| `pnpm test` | Executa os testes Vitest uma vez. |
-| `pnpm test:watch` | Executa o Vitest em modo interativo. |
-| `pnpm test:e2e` | Executa os testes Playwright em desktop e mobile. |
-| `pnpm content:validate` | Valida cartas, tiragens, fontes e arquivos de imagem. |
-| `pnpm content:prepare -- "caminho\\manual.pdf"` | Regenera dados e imagens a partir do manual. |
+| `pnpm dev` | Development server. |
+| `pnpm build` / `pnpm start` | Production build and run. |
+| `pnpm lint` | ESLint. |
+| `pnpm test` / `pnpm test:watch` | Vitest once / watch mode. |
+| `pnpm test:e2e` | Playwright on desktop and mobile. |
+| `pnpm content:validate` | Validates cards, spreads, sources and image files. |
+| `pnpm content:prepare -- "path\\manual.pdf"` | Regenerates data and images from the manual. |
 
-## Rotas principais
+## Main routes
 
-| Rota | Conteúdo |
+| Route | Content |
 | --- | --- |
-| `/` | Página inicial e apresentação do projeto. |
-| `/cartas` | Biblioteca completa com busca e filtros. |
-| `/cartas/[slug]` | Detalhes, símbolos, significados e fonte de uma carta. |
-| `/guia` | Guia introdutório sobre o Tarô de Waite. |
-| `/tiragens` | Catálogo das modalidades de tiragem. |
-| `/tiragens/[slug]` | Fluxo guiado para registrar uma tiragem física. |
-| `/tiragens/resultado/[id]` | Leitura básica e interpretação contextual da sessão. |
-| `/historico` | Tiragens armazenadas neste navegador. |
-| `/api/interpretations` | Endpoint `POST` interno que valida e consulta o Ollama. |
+| `/` | Home and project intro. |
+| `/cartas` and `/cartas/[slug]` | Full library with search and filters; card details. |
+| `/guia` | Introductory guide to the Waite Tarot. |
+| `/tiragens` and `/tiragens/[slug]` | Spread catalog; guided flow to record a physical spread. |
+| `/tiragens/resultado/[id]` | Basic reading and contextual interpretation. |
+| `/historico` | Readings stored in this browser. |
+| `/modelos` | Local Ollama model management. |
+| `/api/interpretations` | Internal `POST` endpoint that validates and calls Ollama. |
 
-## Modalidades de tiragem
+## Spread types
 
-| Modalidade | Cartas | Proposta |
+| Spread | Cards | Purpose |
 | --- | ---: | --- |
-| Carta única | 1 | Mensagem central para uma questão simples. |
-| Duas cartas | 2 | Mensagem principal e complemento ou contraponto. |
-| Cartas que saltaram | 4–12 | Sequência livre registrada na ordem em que surgiu. |
-| Linha do tempo | 3 | Passado, presente e tendência. |
-| Aconselhamento | 3 | Situação, desafio e conselho. |
-| Polaridades | 3 | Forças favoráveis, tensões e resultado. |
-| Cruz Celta | 10 | Leitura aprofundada de causas, ambiente e tendências. |
-| Mandala Astrológica | 12 | Visão ampla de doze áreas da vida. |
+| Single card | 1 | Core message for a simple question. |
+| Two cards | 2 | Main message plus complement or counterpoint. |
+| Jumping cards | 4–12 | Free sequence recorded in the order it appeared. |
+| Timeline | 3 | Past, present and trend. |
+| Advice | 3 | Situation, challenge and advice. |
+| Polarities | 3 | Favorable forces, tensions and outcome. |
+| Celtic Cross | 10 | Deep reading of causes, environment and trends. |
+| Astrological Mandala | 12 | Broad view of twelve areas of life. |
 
-## Estrutura do projeto
+## Project structure
 
 ```text
-Infografico-Tarot/
-├── public/cards/                 # Imagens e miniaturas das 78 cartas
-├── scripts/
-│   ├── prepare_content.py        # Extração do PDF e preparo dos assets
-│   └── validate-content.mjs      # Validação estrutural do conteúdo
+LimiarTarot/
+├── public/cards/                 # Images and thumbnails of the 78 cards
+├── scripts/                      # PDF extraction and content validation
 ├── src/
-│   ├── app/                      # Rotas, layouts, metadados e API do Next.js
-│   ├── assets/fonts/             # Fontes locais
-│   ├── components/               # UI, animações, biblioteca e tiragens
-│   ├── data/                     # Cartas, guia, tiragens e licenças em JSON
-│   ├── hooks/                    # Hooks reutilizáveis
-│   ├── lib/                      # Regras de domínio, persistência e Ollama
-│   └── types/                    # Contratos TypeScript
-├── tests/e2e/                    # Cenários Playwright
-├── .env.example                  # Exemplo de configuração
-└── package.json                  # Scripts e dependências
+│   ├── app/                      # Next.js routes, layouts, metadata and API
+│   ├── components/               # UI, animation, library and spreads
+│   ├── data/                     # Cards, guide, spreads and licenses (JSON)
+│   ├── hooks/                    # Reusable hooks
+│   ├── lib/                      # Domain rules, persistence, drafts and Ollama
+│   └── types/                    # TypeScript contracts
+├── tests/e2e/                    # Playwright scenarios
+└── .env.example
 ```
 
-## Pipeline de conteúdo
+## Content pipeline
 
-Os JSONs e as imagens otimizadas já são versionados. O PDF original não é lido durante a execução do site.
-
-Para instalar as dependências do pipeline:
+The JSON files and optimized images are versioned; the original PDF isn't read at runtime.
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install pypdf Pillow
-```
-
-Para reconstruir o conteúdo:
-
-```powershell
-pnpm content:prepare -- "C:\caminho\Manual do Tarô de Waite.pdf"
+.\.venv\Scripts\python.exe -m pip install pypdf Pillow
+pnpm content:prepare -- "C:\path\Waite Tarot Manual.pdf"
 pnpm content:validate
 ```
 
-O extrator:
+The extractor preserves the source text, generates a normalized Brazilian Portuguese version, records source pages, flags editorial gaps as `needs-review`, produces WebP images and thumbnails and updates source, attribution and checksum metadata. If Wikimedia Commons rate-limits downloads, pass a local mirror with `--mirror-dir`.
 
-- preserva o texto original da fonte;
-- gera uma versão normalizada em português brasileiro;
-- registra as páginas de origem;
-- marca lacunas editoriais como `needs-review`;
-- gera imagens WebP e miniaturas;
-- atualiza os metadados de origem, atribuição e checksum.
-
-Se o Wikimedia Commons limitar os downloads, forneça um espelho local com as imagens já obtidas:
-
-```powershell
-python scripts/prepare_content.py "C:\caminho\Manual do Tarô de Waite.pdf" --mirror-dir "C:\caminho\cards"
-```
-
-Depois da geração, revise as mudanças em `src/data/` e `public/cards/` antes de versioná-las.
-
-## Qualidade e testes
-
-Execute a verificação completa antes de abrir uma contribuição ou publicar:
+## Quality and tests
 
 ```powershell
 pnpm content:validate
@@ -270,65 +193,144 @@ pnpm build
 pnpm test:e2e
 ```
 
-O Playwright inicia ou reutiliza o servidor em `http://127.0.0.1:3000` e testa os projetos `desktop` e `mobile`. Na primeira execução pode ser necessário instalar o navegador:
+Playwright starts or reuses the server at `http://127.0.0.1:3000` and runs `desktop` and `mobile` projects. On first run: `pnpm exec playwright install chromium`.
+
+## Persistence and privacy
+
+Readings are stored in `localStorage` (the 50 most recent), on the device and browser used, and can be deleted individually or from the history screen. In-progress spreads are kept as drafts for 24 hours. When you request an interpretation, the question, theme, spread and cards go to the internal `/api/interpretations` endpoint, which builds a canonical context and forwards it to the Ollama set in `OLLAMA_BASE_URL`.
+
+## Build and deploy
+
+The frontend deploys to any Next.js-compatible platform such as Vercel. Set `NEXT_PUBLIC_SITE_URL` to the public domain (previews also use `VERCEL_URL`).
+
+In production, `127.0.0.1` points to the app's own server, not the visitor's computer. To offer AI interpretations remotely, set `OLLAMA_BASE_URL` to an instance reachable by the server and protect it. Without it, the portal still offers the basic reading.
+
+## Troubleshooting
+
+- **AI interpretation doesn't work:** check `ollama list`, pull a compatible model, confirm `OLLAMA_BASE_URL` and that nothing blocks port `11434`.
+- **Model runs out of memory:** switch to `qwen3.5:4b` or `gemma3:4b`, close heavy apps and try again.
+- **Playwright can't find a browser:** `pnpm exec playwright install chromium`.
+- **PowerShell blocks venv activation:** call `.\.venv\Scripts\python.exe` directly instead of activating.
+
+## Sources and editorial note
+
+Local images use the public-domain RWS1909 deck. `src/data/image-licenses.json` records source, attribution and checksum for each image. The manual doesn't separate career and love meanings for the **8 of Swords**; those fields stay flagged for review and the UI doesn't invent missing content.
+
+---
+
+## 🇧🇷 Português
+
+# Limiar — Tarô de Waite
+
+Portal informativo e interativo em português brasileiro para estudar as 78 cartas do Rider-Waite e interpretar tiragens feitas com um baralho físico.
+
+O Limiar não embaralha nem sorteia cartas. A pessoa faz a tiragem com o próprio baralho, registra no site a sequência obtida e recebe uma leitura baseada no conteúdo canônico do projeto. Quando o Ollama está disponível, a aplicação também produz uma interpretação contextual por IA; se o serviço falhar, a leitura básica continua acessível.
+
+> As interpretações têm finalidade simbólica e reflexiva. Elas não substituem orientação médica, psicológica, jurídica ou financeira.
+
+### Recursos
+
+- Biblioteca pesquisável com os 22 Arcanos Maiores e 56 Arcanos Menores.
+- Significados por contexto: geral, carreira, amor e tendências futuras.
+- Páginas individuais com simbolismo, palavras-chave e referência ao manual.
+- Carta do Dia dinâmica, girando pelas 78 cartas sem repetir no ciclo.
+- Oito modalidades de tiragem, de uma carta à Mandala Astrológica.
+- Registro guiado das cartas: **Enter** registra o primeiro resultado da busca, o indicador de etapas funciona como navegação e dá para voltar a qualquer etapa concluída.
+- **Tiragem retomável:** pergunta, tema, cartas e etapa ficam salvos por 24 horas por modalidade; recarregar ou fechar o navegador não perde o progresso.
+- Interpretação contextual opcional com Ollama, escolhendo entre Gemma 3 e Qwen 3.5.
+- Gerenciamento completo dos modelos locais pelo portal: instalação com progresso, seleção e remoção.
+- Leitura básica automática quando a IA local não está disponível.
+- Histórico de até 50 tiragens no navegador, com **desfazer** nas exclusões individuais ou totais.
+- Interface responsiva, animações, botão de voltar ao topo e respeito ao movimento reduzido.
+- Testes unitários, de componentes, de conteúdo e ponta a ponta.
+
+### Tecnologias
+
+Next.js 16, React 19, TypeScript, Tailwind CSS 4, Motion, Zod, Ollama (Gemma 3 e Qwen 3.5), Vitest, Testing Library, Playwright, Python (pypdf e Pillow) e pnpm.
+
+### Como a leitura funciona
+
+Escolher a tiragem → escrever a pergunta e o tema → tirar as cartas no baralho físico → registrar as cartas na ordem → salvar a sessão no navegador → interpretação por IA (se o Ollama estiver disponível) ou leitura básica pelo conteúdo canônico. A API valida pergunta, modalidade, quantidade e posição das cartas antes de consultar o Ollama, e a resposta do modelo passa por um schema estrito que não deixa introduzir cartas ausentes.
+
+### Pré-requisitos
+
+- Para rodar: Node.js 20.9+ e pnpm.
+- Para a IA: Ollama em execução com pelo menos um modelo compatível.
+- Para regenerar o conteúdo do PDF: Python 3.11+ com `pypdf` e `Pillow`.
+
+### Instalação fácil no Windows
+
+Dê dois cliques em `ABRIR_LIMIAR_TARO.bat` (**Limiar Tarô — Início Fácil**). Ele cria um atalho com ícone na Área de Trabalho, verifica o Node.js, instala as dependências, prepara o `.env.local` e oferece um menu opcional para instalar, listar ou remover modelos do Ollama. No fim, mostra como acessar [http://localhost:3000](http://localhost:3000).
+
+Como o Windows não incorpora ícones em `.bat`, o repositório inclui o atalho `Limiar Tarô - Início Fácil.lnk`, que usa `assets/limiar-taro.ico`. Atalhos `.lnk` guardam o caminho da pasta: depois de clonar ou mover o projeto, rode o `.bat` uma vez para atualizar os dois atalhos. Para abrir só o gerenciador de modelos: `ABRIR_LIMIAR_TARO.bat --ollama-only`.
+
+### Instalação manual
 
 ```powershell
-pnpm exec playwright install chromium
+pnpm install
+Copy-Item .env.example .env.local
+pnpm dev
 ```
 
-## Persistência e privacidade
+O conteúdo, as imagens e a leitura básica já estão no repositório; Ollama e Python não são necessários só para navegar.
 
-As tiragens são salvas em `localStorage`, limitadas às 50 sessões mais recentes. Elas ficam no navegador e dispositivo usados e podem ser excluídas individualmente ou pela tela de histórico.
+### Interpretação local com Ollama
 
-Ao solicitar uma interpretação, pergunta, tema, modalidade e cartas são enviados ao endpoint interno `/api/interpretations`. Esse endpoint monta um contexto canônico e o encaminha ao Ollama configurado em `OLLAMA_BASE_URL`.
-
-## Build e implantação
-
-Para conferir o modo de produção localmente:
+O máximo atual é **12 cartas**: a tiragem livre aceita de 4 a 12, a Mandala usa 12 e a API rejeita acima disso. Os modelos compatíveis, tamanhos e perfis estão na tabela da versão em inglês acima; `gemma3:12b` é o padrão e `qwen3.5:9b` é o melhor equilíbrio geral. O Limiar usa janela de 16K e valida o JSON retornado.
 
 ```powershell
-pnpm build
-pnpm start
-```
-
-O front-end pode ser implantado em plataformas compatíveis com Next.js, como a Vercel. Configure `NEXT_PUBLIC_SITE_URL` com o domínio público; em previews da Vercel, o projeto também reconhece `VERCEL_URL`.
-
-Há uma diferença importante para a IA: em produção, `127.0.0.1` aponta para o próprio servidor da aplicação, não para o computador do visitante. Para disponibilizar interpretações em um deploy remoto, configure `OLLAMA_BASE_URL` com uma instância acessível pelo servidor e proteja esse serviço adequadamente. Sem ela, o portal continua oferecendo a leitura básica.
-
-## Solução de problemas
-
-### O site abre, mas a interpretação por IA não funciona
-
-Confirme se o Ollama responde e se pelo menos um modelo compatível está instalado:
-
-```powershell
-ollama list
 ollama pull qwen3.5:9b
+ollama pull gemma3:12b
+ollama serve
+pnpm dev
 ```
 
-Também confira `OLLAMA_BASE_URL` e se outra aplicação está bloqueando a porta `11434`.
+Por padrão, o Next.js consulta `http://127.0.0.1:11434`, com limite de seis minutos. Em **Modelos** (`/modelos`) dá para instalar com progresso, trocar o modelo ativo ou excluir modelos sem terminal; a exclusão só é liberada depois de digitar o identificador exato. A primeira etapa da tiragem e a página de resultado também permitem trocar o modelo, e a escolha fica salva no navegador.
 
-### O modelo fica sem memória
+### Variáveis de ambiente
 
-Troque para `qwen3.5:4b` ou `gemma3:4b` no seletor, feche aplicações pesadas e tente novamente. Em tiragens próximas de 12 cartas, o modelo leve pode ser menos consistente; a leitura básica permanece utilizável.
+Crie `.env.local` a partir de `.env.example`: `NEXT_PUBLIC_SITE_URL` (recomendada, URL canônica), `OLLAMA_BASE_URL` (padrão `http://127.0.0.1:11434`), `OLLAMA_MODEL` (padrão `gemma3:12b`) e `OLLAMA_TIMEOUT_MS` (padrão `360000`). Nunca versione `.env.local`.
 
-### O Playwright não encontra um navegador
+### Comandos
+
+`pnpm dev`, `pnpm build` / `pnpm start`, `pnpm lint`, `pnpm test` / `pnpm test:watch`, `pnpm test:e2e` (desktop e mobile), `pnpm content:validate` e `pnpm content:prepare -- "caminho\\manual.pdf"`.
+
+### Rotas e modalidades
+
+As rotas (`/`, `/cartas`, `/guia`, `/tiragens`, `/tiragens/resultado/[id]`, `/historico`, `/modelos` e `/api/interpretations`) e as oito modalidades (Carta única, Duas cartas, Cartas que saltaram, Linha do tempo, Aconselhamento, Polaridades, Cruz Celta e Mandala Astrológica) estão detalhadas nas tabelas da versão em inglês.
+
+### Pipeline de conteúdo
+
+Os JSONs e as imagens otimizadas já estão versionados; o PDF não é lido durante a execução.
 
 ```powershell
-pnpm exec playwright install chromium
-```
-
-### A ativação do ambiente Python foi bloqueada no PowerShell
-
-É possível executar o Python da venv sem ativá-la:
-
-```powershell
+python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install pypdf Pillow
-.\.venv\Scripts\python.exe scripts\prepare_content.py "C:\caminho\manual.pdf"
+pnpm content:prepare -- "C:\caminho\Manual do Tarô de Waite.pdf"
+pnpm content:validate
 ```
 
-## Fontes e observação editorial
+O extrator preserva o texto original, gera a versão normalizada em português, registra as páginas de origem, marca lacunas como `needs-review`, gera imagens WebP e miniaturas e atualiza origem, atribuição e checksum. Se o Wikimedia Commons limitar os downloads, use `--mirror-dir` com um espelho local.
 
-As imagens locais usam o baralho RWS1909 em domínio público. O arquivo `src/data/image-licenses.json` registra origem, atribuição e checksum de cada imagem.
+### Qualidade e testes
 
-O manual não separa interpretações de carreira e amor para o **8 de Espadas**. Esses campos permanecem sinalizados para revisão, e a interface não inventa conteúdo ausente.
+Antes de publicar: `pnpm content:validate`, `pnpm test`, `pnpm lint`, `pnpm build` e `pnpm test:e2e`. Na primeira execução do Playwright: `pnpm exec playwright install chromium`.
+
+### Persistência e privacidade
+
+As tiragens ficam no `localStorage` (as 50 mais recentes), no navegador e aparelho usados, e podem ser excluídas pelo histórico. Tiragens em andamento ficam salvas como rascunho por 24 horas. Ao pedir uma interpretação, pergunta, tema, modalidade e cartas vão para o endpoint interno `/api/interpretations`, que monta o contexto canônico e consulta o Ollama configurado.
+
+### Build e implantação
+
+O front-end pode ir para qualquer plataforma compatível com Next.js, como a Vercel, com `NEXT_PUBLIC_SITE_URL` apontando para o domínio público. Em produção, `127.0.0.1` é o próprio servidor, não o computador do visitante: para ter IA num deploy remoto, configure `OLLAMA_BASE_URL` com uma instância acessível e protegida. Sem ela, o portal continua com a leitura básica.
+
+### Solução de problemas
+
+- **A IA não funciona:** confira `ollama list`, baixe um modelo compatível, confira `OLLAMA_BASE_URL` e a porta `11434`.
+- **O modelo fica sem memória:** troque para `qwen3.5:4b` ou `gemma3:4b` e feche aplicações pesadas.
+- **O Playwright não acha o navegador:** `pnpm exec playwright install chromium`.
+- **O PowerShell bloqueou a venv:** use `.\.venv\Scripts\python.exe` direto, sem ativar.
+
+### Fontes e observação editorial
+
+As imagens usam o baralho RWS1909 em domínio público, com origem, atribuição e checksum em `src/data/image-licenses.json`. O manual não separa carreira e amor para o **8 de Espadas**; esses campos ficam marcados para revisão e a interface não inventa conteúdo.
